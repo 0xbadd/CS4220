@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DnD 5e Spells</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div id="spells" v-cloak>
+      <!-- Application Title and tagline -->
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg">
+              <h1 class="display-2">DnD 5e Spells App</h1>
+              <p class="lead">
+                Search spells available in Dungeons and Dragons 5th Edition
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-cloak class="container">
+        <div class="row">
+          <div class="col-lg-8">
+            <!-- Search Form -->
+            <div class="form-group" v-if="isSearching">
+              <input
+                type="text"
+                v-model="query"
+                class="form-control width100"
+                placeholder="Enter query"
+                onfocus="this.value=''"
+              />
+              <button class="btn btn-dark" @click="searchSubmit">
+                Search
+              </button>
+            </div>
+
+            <!-- List spells -->
+            <div class="form-group" v-if="!isSearching && !showResult">
+              <h3>Search Results: {{searchCount}}</h3>
+              <label for="sel">Please select a spell:</label>
+              <select class="form-control" id="sel" v-model="selectedSpell">
+                <option v-for="spell in spells" @click="fetchSubmit">
+                  {{spell}}
+                </option>
+              </select>
+            </div>
+
+            <!-- Queried Spell Information -->
+            <div class="" v-if="showResult">
+              <img class="float-right" v-bind:src="spellData.img" />
+              <h1>{{spellData.name}}</h1>
+
+              <p v-if="spellData.level === 0">
+                <i>{{spellData.school.name}} Cantrip</i>
+              </p>
+              <p v-else>
+                <i>Level {{spellData.level}} {{spellData.school.name}}</i>
+              </p>
+
+              <p>
+                <b>Casting Time:</b> {{spellData.casting_time}}<br />
+                <b>Range:</b> {{spellData.range}}<br />
+                <b>Components:</b>
+                <span v-for="elem in spellData.components">{{elem}} </span
+                ><br />
+                <b>Duration:</b>
+                <span v-if="spellData.concentration">Concentration, </span
+                >{{spellData.duration}}<br />
+                <b>Classes:</b>
+                <span v-for="elem in spellData.classes">{{elem.name}} </span
+                ><br />
+              </p>
+
+              <p>{{spellData.desc[0]}}</p>
+              <p v-if="spellData.higher_level">{{spellData.higher_level[0]}}</p>
+
+              <button class="btn btn-dark" @click="searchAgain">
+                Search Again
+              </button>
+            </div>
+          </div>
+
+          <!-- Search History Componenct -->
+          <div class="col-lg-4">
+            <history-component
+              v-bind:past-spells="pastSpells"
+              v-on:fetch-past-spell="fetchPastSpell"
+            ></history-component>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="app.js" type="text/javascript"></script>
+  </body>
+</html>

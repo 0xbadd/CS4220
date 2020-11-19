@@ -1,0 +1,14 @@
+{
+  "name": "dnd-spells",
+  "version": "1.0.0",
+  "description": "Module for DND5e API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Gomez",
+  "license": "Unlicense",
+  "dependencies": {
+    "superagent": "^5.2.2"
+  }
+}
