@@ -1,8 +1,8 @@
 {
-  "name": "server",
+  "name": "dnd-spells",
   "version": "1.0.0",
-  "description": "Module for DnD5e server",
-  "main": "server.js",
+  "description": "DnD spell search web app",
+  "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
